@@ -1,0 +1,65 @@
+<div class="table-header">
+    <div class="filter-container">
+      <span>Texto de Búsqueda:</span>
+      <input type="text" class="form-control" [(ngModel)]="globalFilter" (ngModelChange)="onFilterChange($event)"/>
+    </div>
+    <div class="pagination-info">
+      <select class="form-select" (change)="onPageSizeChange($event)" [value]="pageSize">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let header of headers">{{ header.displayName }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredData | slice:(pageNumber-1)*pageSize:(pageNumber*pageSize); let i = index">
+          <td *ngFor="let header of headers">{{ item[header.dataKey] }}</td>
+          <td>
+            <a href="javascript:" class="label theme-bg2 text-white f-12 rounded-pill">Reject</a>
+            <a href="javascript:" class="label theme-bg text-white f-12 rounded-pill">Approve</a>
+          </td>
+        </tr>
+        <tr *ngIf="filteredData.length === 0">
+          <td [attr.colspan]="headers.length">No se encontró resultados.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <nav aria-label="Page navigation example" *ngIf="totalPages > 1 || totalItems > 0" class="pagination-container">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="pageNumber === 1">
+        <a class="page-link" href="javascript:" (click)="onPageChange(1)">
+          <i class="feather icon-chevrons-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [class.disabled]="pageNumber === 1">
+        <a class="page-link" href="javascript:" (click)="onPageChange(pageNumber - 1)">
+          <i class="feather icon-chevron-left"></i>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
+        <a class="page-link" href="javascript:" [class.active]="pageNumber === (i + 1)" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="pageNumber === totalPages">
+        <a class="page-link" href="javascript:" (click)="onPageChange(pageNumber + 1)">
+          <i class="feather icon-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item" [class.disabled]="pageNumber === totalPages">
+        <a class="page-link" href="javascript:" (click)="onPageChange(totalPages)">
+          <i class="feather icon-chevrons-right"></i>
+        </a>
+      </li>
+    </ul>
+    <div class="pagination-info">
+      <span>{{ getRange() }}</span>
+    </div>
+  </nav>
+  

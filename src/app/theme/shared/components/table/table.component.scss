@@ -1,0 +1,42 @@
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  
+    .filter-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+  
+      span {
+        margin-right: 0.5rem;
+        font-weight: bold;
+      }
+  
+      .form-control {
+        max-width: 200px; // Ajusta el ancho máximo según sea necesario
+        height: 35px;
+      }
+    }
+  
+    .pagination-info {
+      display: flex;
+      align-items: center;
+  
+      .form-select {
+        max-width: 70px; // Ajusta el ancho máximo según sea necesario
+        height: 35px;
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .table-responsive {
+    margin-bottom: 1rem;
+  }
+  
+  .pagination-container {
+    margin-top: 1rem;
+  }
+  

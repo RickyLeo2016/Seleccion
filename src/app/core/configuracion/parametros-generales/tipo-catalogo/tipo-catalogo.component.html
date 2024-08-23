@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-sm-12 d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" type="button" (click)="toggleCard()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Nuevo
+      </button>
+    </div>
+      <div class="col-sm-6">
+          <app-card *ngIf="isCardVisible"  cardTitle="Registro Tipo Catálogo" >
+              <div class="col-sm-12">
+                  <form [formGroup]="tipoCatalogoForm" (ngSubmit)="handleSave()" class="was-validated">
+                      <div class="row">
+                        <div class="col-lg-12 mb-3">
+                          <label for="tipCatDescripcion">Descripción</label>
+                          <input type="text" formControlName="tipCatDescripcion" class="form-control" id="tipCatDescripcion" placeholder="Ingrese al descripción" required />
+                          <div *ngIf="tipoCatalogoForm.get('tipCatDescripcion').invalid && (tipoCatalogoForm.get('tipCatDescripcion').dirty || tipoCatalogoForm.get('tipCatDescripcion').touched)" class="invalid-feedback">
+                            *Campo Requerido
+                          </div>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                          <label for="tipCatEstado">Estado</label>
+                          <select id="tipCatEstado" formControlName="tipCatEstado" class="form-select" required>
+                              <option *ngFor="let option of catalogOptions" [value]="option.value">
+                                {{ option.label }}
+                              </option>
+                            </select>
+                            <div *ngIf="tipoCatalogoForm.get('tipCatEstado')?.invalid && tipoCatalogoForm.get('tipCatEstado')?.touched">
+                              <div class="invalid-feedback">*Campo Requerido</div>
+                            </div>
+                        </div>
+                      </div>
+                      <button class="btn btn-primary" type="submit">Enviar</button>
+                    </form>
+              </div>
+          </app-card>
+      </div>   
+      <div class="col-sm-12">
+        <app-card cardTitle="Lista Tipo Catálogo"  blockClass="table-border-style">
+          <app-table
+          [data]="tipoCatalogoList"
+          [totalItems]="totalItems"
+          [pageSize]="pageSize"
+          [pageNumber]="pageNumber"
+          [pageSizes]="pageSizes"
+          [headers]="headers"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"
+          (filterChange)="onFilterChange($event)">
+        </app-table>
+          </app-card>
+      </div>
+  
+  
+  </div>
